@@ -1,0 +1,91 @@
+﻿$gray: #eee;
+
+ md-content.md-default-theme {
+     background-color: $gray;
+ }
+md-card {
+    background-color: #fff;
+h2:first-of-type {
+    margin-top: 0;
+}
+}
+md-toolbar {
+.md-button.md-default-theme {
+    border-radius: 99%; // round toolbar buttons
+}
+}
+h2 {
+    font-weight: 400;
+}
+.md-toolbar-tools-bottom {
+    font-size: small;
+& :last-child {
+    opacity: 0.8;
+}
+}
+md-toolbar:not(.md-hue-1),
+.md-fab {
+    fill: #fff;
+}
+md-sidenav {
+    fill: #737373;
+ng-md-icon {
+    position: relative;
+    top: 5px; // adjust for svg viewbox
+}
+}
+.user-avatar {
+    border-radius: 99%;
+}
+
+.well {
+    text-align:center;
+    vertical-align:central;
+}
+
+md-grid-list {
+    margin: 8px;
+}
+
+.gray {
+    background: #f5f5f5;
+}
+
+.green {
+    background: #b9f6ca;
+}
+
+.yellow {
+    background: #ffff8d;
+}
+
+.blue {
+    background: #24267a;
+}
+
+.purple {
+    background: #b388ff;
+}
+
+.red {
+    background: #ff8a80;
+}
+
+md-grid-tile {
+    transition: all 400ms ease-out 50ms;
+}
+
+.card-info-label {
+    font-size: 0.95em !important;
+    font-weight: 500;
+}
+
+.well {
+    text-align:center;
+    padding-bottom:15px;
+}
+
+.well h4
+{ 
+    margin-bottom: 2px !important; 
+}

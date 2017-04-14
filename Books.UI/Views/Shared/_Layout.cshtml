@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Books.UI</title>
+    
+    <environment names="Development">
+        <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/lib/angular-material/angular-material.css" rel="stylesheet" />
+        <link href="~/css/site.css" rel="stylesheet" />
+    </environment>
+    <environment names="Staging,Production">
+        <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/lib/angular-material/angular-material.min.css" rel="stylesheet"/>
+        <link href="~/css/site.min.css" rel="stylesheet"/>
+    </environment>
+</head>
+<body layout="row" >
+    @RenderBody()
+
+    <environment names="Development">
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/ng-main.js"></script>
+        <script src="~/js/ng-user.js"></script>
+    </environment>
+<environment names="Staging,Production">
+    <script src="~/js/site.min.js" asp-append-version="true"></script>
+    <script src="~/js/ng-main.min.js"></script>
+    <script src="~/js/ng-user.js"></script>
+</environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Contact";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="//code.angularjs.org/1.5.0/angular.js"></script>
+    <script src="//code.angularjs.org/1.5.0/angular-aria.js"></script>
+    <script src="//code.angularjs.org/1.5.0/angular-animate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script>
+        var app = angular.module('myapp', ['ngMaterial'])
+            .controller("autocompleteController", function($http){
+          
+                this.querySearch = function(query){
+                    return $http.get("https://api.github.com/search/users", {params: {q: query}})
+                        .then(function(response){
+                            return response.data.items;
+                        })
+                }
+            });
+      
+    </script>
+    <style>
+        </style>
+</head>
+
+<body ng-app='myapp' layout="column" 
+      ng-controller="autocompleteController as ctrl" >
+  
+<md-autocomplete flex
+                 md-selected-item="ctrl.selectedItem"
+                 md-search-text="ctrl.searchText"
+                 md-items="item in ctrl.querySearch(ctrl.searchText)"
+                 md-item-text="item.login"
+                 md-delay="300"
+                 md-floating-label="Search Github Users">
+    <div layout="row" class="item" layout-align="start center">
+        <img ng-src="{{item.avatar_url}}" class="avatar" />
+        &nbsp;&nbsp;
+        <span md-highlight-text="ctrl.searchText">{{item.login}}</span>  
+    </div>
+          
+          
+</md-autocomplete>
+    
+</body>
+
+</html>
