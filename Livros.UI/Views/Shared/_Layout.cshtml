@@ -1,0 +1,15 @@
+﻿<!DOCTYPE html>
+<html ng-app="app" ngStrictDi>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/bundles/styles")
+</head>
+<body layout="row">
+    @RenderBody()
+
+    @Scripts.Render("~/bundles/scripts")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

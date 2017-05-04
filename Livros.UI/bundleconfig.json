@@ -1,0 +1,20 @@
+[
+  {
+    "outputFileName": "scripts/app/bookService.min.js",
+    "inputFiles": [
+      "scripts/app/bookService.js"
+    ]
+  },
+  {
+    "outputFileName": "scripts/app/mainController.min.js",
+    "inputFiles": [
+      "scripts/app/mainController.js"
+    ]
+  },
+  {
+    "outputFileName": "scripts/app/app.min.js",
+    "inputFiles": [
+      "scripts/app/app.js"
+    ]
+  }
+]

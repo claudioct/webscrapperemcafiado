@@ -1,0 +1,21 @@
+{
+  "name": "angular-aria",
+  "version": "1.6.5-build.5353+sha.136a42a",
+  "license": "MIT",
+  "main": "./angular-aria.js",
+  "ignore": [],
+  "dependencies": {
+    "angular": "1.6.5-build.5353+sha.136a42a"
+  },
+  "homepage": "https://github.com/angular/bower-angular-aria",
+  "_release": "1.6.5-build.5353+sha.136a42a",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.6.5-build.5353+sha.136a42a",
+    "commit": "3d855bf2cc2c1a12957075d830f3ca619a29afef"
+  },
+  "_source": "https://github.com/angular/bower-angular-aria.git",
+  "_target": "v1.6.5-build.5353+sha.136a42a",
+  "_originalSource": "angular-aria",
+  "_direct": true
+}

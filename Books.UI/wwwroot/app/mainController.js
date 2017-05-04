@@ -6,7 +6,7 @@
 
         var self = this;
         $scope.books = [];
-        $scope.imagePath = 'img/washedout.png';
+        $scope.imagePath = "img/washedout.png";
 
         self.simulateQuery = false;
         self.isDisabled = false;
@@ -14,12 +14,12 @@
         this.querySearch = function querySearch(query) {
             var deferred = $q.defer();
             $http.get("/books", { params: { d: query } }).then(function(response) {
-                $log.debug(response.data);
+                $log.info(response.data);
                 deferred.resolve(response.data);
                 },
                 function(msg, code) {
                     deferred.reject(msg);
-                    $log.error(msg, code);
+                    $log.info(msg, code);
                 });
 
             return deferred.promise;
@@ -28,11 +28,11 @@
         self.selectedItemChange = function selectedItemChange(item) {
             $log.debug(item);
             $http.get("/books", { params: { nome: item.nome, autor: item.autor } }).then(function (response) {
-                $log.debug(response);
+                $log.info(response);
                     $scope.books.push(response.data);
                 },
                 function (msg, code) {
-                    $log.error(msg, code);
+                    $log.info(msg, code);
                 });
         }
          

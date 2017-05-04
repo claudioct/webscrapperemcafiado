@@ -10,7 +10,7 @@
                              md-item-text="item.info"
                              md-min-length="0"
                              placeholder="Qual livro está procurando?"
-                             ng-model-options="{ debounce: 750 }">
+                             ng-model-options="{ debounce: 400 }">
                 <md-item-template>
                     <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.info}}</span>
                 </md-item-template>
