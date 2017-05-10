@@ -1,17 +1,12 @@
 (function () {
 
-    var app = angular.module("app", ["ngMaterial", "ngMdIcons"])
-        .config(function ($mdThemingProvider) {
-            $mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark();
-            $mdThemingProvider.theme('dark-orange').backgroundPalette('orange').dark();
-            $mdThemingProvider.theme('dark-purple').backgroundPalette('deep-purple').dark();
-            $mdThemingProvider.theme('dark-blue').backgroundPalette('blue').dark();
-        })
-        .filter('reverse', function () {
-            return function (items) {
-                return items.slice().reverse();
-            };
-        });
+    var app = angular.module("app", ["ngMaterial", "ngTouch","ngMdIcons"]);
+    app.config(["$mdThemingProvider", function ($mdThemingProvider) {
+        $mdThemingProvider.theme("dark-grey").backgroundPalette("grey").dark();
+        $mdThemingProvider.theme("dark-orange").backgroundPalette("orange").dark();
+        $mdThemingProvider.theme("dark-purple").backgroundPalette("deep-purple").dark();
+        $mdThemingProvider.theme("dark-blue").backgroundPalette("blue").dark();
+    }]);
 })();
 (function() {
 
@@ -53,6 +48,15 @@
         var self = this;
         $scope.books = [];
         $scope.imagePath = "img/washedout.png";
+        self.clear = function () {
+            self.searchText = '';
+        }
+
+        $scope.apagar = function (id) {
+            $scope.books = $scope.books.filter(function (obj) {
+                return obj.id !== id;
+            });
+        };
 
         self.simulateQuery = false;
         self.isDisabled = false;
@@ -74,7 +78,8 @@
         self.selectedItemChange = function selectedItemChange(item) {
             $log.debug(item);
             $http.get("/books", { params: { nome: item.nome, autor: item.autor } }).then(function (response) {
-                $log.info(response);
+                    $log.info(response);
+                    self.clear();
                     $scope.books.push(response.data);
                 },
                 function (msg, code) {

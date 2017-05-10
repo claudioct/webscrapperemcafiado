@@ -7,9 +7,7 @@
         var self = this;
         $scope.books = [];
         $scope.imagePath = 'img/washedout.png';
-        self.clear = function () {
-            self.searchText = '';
-        }
+
 
         self.simulateQuery = false;
         self.isDisabled = false;

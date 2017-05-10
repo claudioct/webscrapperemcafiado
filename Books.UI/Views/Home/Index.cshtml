@@ -8,18 +8,18 @@
                              md-search-text="ctrl.searchText"
                              md-items="item in ctrl.querySearch(ctrl.searchText)"
                              md-item-text="item.info"
-                             md-min-length="0"
+                             md-min-length="1"
                              placeholder="Qual livro está procurando?"
-                             ng-model-options="{ debounce: 400 }">
+                             ng-model-options="{ debounce: 125 }">
                 <md-item-template>
                     <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.info}}</span>
                 </md-item-template>
             </md-autocomplete>
         </md-content>
-        <md-content class="md-padding" style="overflow: visible">
+        <md-content class="md-padding">
             <div flex-xs flex-gt-md="55" layout="column">
-                <md-item ng-repeat="item in books | orderBy:'-'">
-                    <md-card md-theme="dark-grey" md-theme-watch class="col-md-9">
+                <md-item ng-repeat="item in books | orderBy:'-'" data-ng-swipe-left="apagar(item.id)">
+                    <md-card md-theme="dark-grey" md-theme-watch>
                         <md-card-title style="background-color: #008080">
                             <md-card-title-text>
                                 <span class="md-headline">{{item.nome}}</span>
@@ -28,42 +28,42 @@
                         </md-card-title>
                         <md-card-content layout="column" layout-align="center">
                             <div class="row" style="padding: 15px;">
-                                <div class="col-md-4">
+                                <div class="col-lg-4 col-md-2 col-sm-4 col-6">
                                     <div class="well">
                                         <div class="text-primary">
                                             <h4 class="label label-danger">{{item.qtd}} </h4><span class="card-info-label">Vendidos</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-lg-4 col-md-2 col-sm-4 col-6">
                                     <div class="well">
                                         <div class="text-danger">
                                             <h4 class="label label-success pull-right">R$ {{item.min}} </h4><span class="card-info-label"> Menor preço</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-lg-4 col-md-2 col-sm-4 col-6">
                                     <div class="well">
                                         <div class="text-success">
                                             <h4 class="label label-primary pull-right">R$ {{item.max}}</h4> <span class="card-info-label">Maior preço</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-lg-4 col-md-2 col-sm-4 col-6">
                                     <div class="well">
                                         <div class="text-warning">
                                             <h4 class="label label-success pull-right">R$ {{item.media}} </h4> <span class="card-info-label">Preço médio</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-lg-4 col-md-2 col-sm-4 col-6">
                                     <div class="well">
                                         <div class="text-info">
                                             <h4 class="label label-success pull-right">{{item.dtUltimaVenda}} </h4> <span class="card-info-label">Última venda</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-lg-4 col-md-2 col-sm-4 col-6">
                                     <div class="well">
                                         <div class="text-muted">
                                             <h4 class="label label-success pull-right">R$ {{item.vlUltimaVenda}} </h4> <span class="card-info-label">Valor últ. venda</span>

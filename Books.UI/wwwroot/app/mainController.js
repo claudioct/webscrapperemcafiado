@@ -7,6 +7,15 @@
         var self = this;
         $scope.books = [];
         $scope.imagePath = "img/washedout.png";
+        self.clear = function () {
+            self.searchText = '';
+        }
+
+        $scope.apagar = function (id) {
+            $scope.books = $scope.books.filter(function (obj) {
+                return obj.id !== id;
+            });
+        };
 
         self.simulateQuery = false;
         self.isDisabled = false;
@@ -28,7 +37,8 @@
         self.selectedItemChange = function selectedItemChange(item) {
             $log.debug(item);
             $http.get("/books", { params: { nome: item.nome, autor: item.autor } }).then(function (response) {
-                $log.info(response);
+                    $log.info(response);
+                    self.clear();
                     $scope.books.push(response.data);
                 },
                 function (msg, code) {

@@ -6,7 +6,8 @@
     "allmighty-autocomplete": "*",
     "angular-material": "v1.1.3",
     "angular-material-icons": "v0.7.1",
-    "bootstrap": "v4.0.0-alpha.6"
+    "bootstrap": "v4.0.0-alpha.6",
+    "angular-touch": "v1.6.5-build.5353+sha.136a42a"
   },
   "resolutions": {
     "angular": "^1.4.8"

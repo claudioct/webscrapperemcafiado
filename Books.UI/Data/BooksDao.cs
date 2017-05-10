@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Books.UI.Helper;
 using MySql.Data.MySqlClient;
 
 namespace Books.UI.Data
@@ -23,12 +24,14 @@ namespace Books.UI.Data
         public object[] GetBooks(string search)
         {
             try { 
-            var query = $@"SELECT Nome, Autor 
+            var query = $@"
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+SELECT Nome, Autor 
 FROM Livroes L
-WHERE UPPER(L.Nome + ' ' + L.Autor) LIKE UPPER('%{search}%')
-	OR UPPER (L.Autor + ' ' + L.Nome) LIKE UPPER('%{search}%')
+WHERE UPPER(L.Nome) LIKE UPPER('%{search}%')
+	OR UPPER (L.Autor) LIKE UPPER('%{search}%')
 ORDER BY L.QtdVendida DESC
-LIMIT 25";
+LIMIT 5";
             var books = new List<object>();
 
             
@@ -65,7 +68,9 @@ LIMIT 25";
             try
             {
                 var query =
-                    $@"SELECT E.Nome Genero, L.Nome, L.Autor, L.QtdVendida, L.DtUltimaVenda, L.ValorUltimaVenda, L.ValorMaxVenda, L.ValorMinVenda, L.ValorMedioVenda 
+                    $@"
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+SELECT E.Nome Genero, L.Nome, L.Autor, L.QtdVendida, L.DtUltimaVenda, L.ValorUltimaVenda, L.ValorMaxVenda, L.ValorMinVenda, L.ValorMedioVenda 
 FROM Livroes L 
 	INNER JOIN Estantes E ON E.IdEstante = L.IdEstante
 WHERE UPPER(L.Autor) = UPPER(@autor)
@@ -105,6 +110,50 @@ AND UPPER(L.Nome) = UPPER(@nome)";
             {
                 return new {error = ex.ToString()};
             }
+        }
+
+        public List<LivroEntity> GetAllBooks()
+        {
+            List<LivroEntity> books = new List<LivroEntity>();
+            var query =
+                $@"
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+SELECT  L.IdLivro, E.Nome Genero, L.Nome, L.Autor, L.QtdVendida, L.DtUltimaVenda, L.ValorUltimaVenda, L.ValorMaxVenda, L.ValorMinVenda, L.ValorMedioVenda 
+FROM Livroes L INNER JOIN Estantes E ON E.IdEstante = L.IdEstante;";
+
+            using (var connection = new MySqlConnection(_connString))
+            {
+                var cmd = new MySqlCommand(query, connection);
+
+                connection.Open();
+                cmd.CommandTimeout = 180;
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var book = new LivroEntity()
+                        {
+                            id = reader.GetInt32(reader.GetOrdinal("IdLivro")),
+                            nome = reader.SafeGetString(reader.GetOrdinal("Nome")),
+                            autor = reader.SafeGetString(reader.GetOrdinal("Autor")),
+                            genero = reader.SafeGetString(reader.GetOrdinal("Genero")),
+                            qtd = reader.SafeGetInt32(reader.GetOrdinal("QtdVendida")),
+                            min = reader.SafeGetString(reader.GetOrdinal("ValorMinVenda")),
+                            max = reader.SafeGetString(reader.GetOrdinal("ValorMaxVenda")),
+                            media = reader.SafeGetString(reader.GetOrdinal("ValorMedioVenda")),
+                            dtUltimaVenda = reader.SafeGetString(reader.GetOrdinal("DtUltimaVenda")),
+                            vlUltimaVenda = reader.SafeGetString(reader.GetOrdinal("ValorUltimaVenda"))
+                        };
+
+                        book.nomeNormalized = book.nome.RemoveDiacritics().ToUpper();
+                        book.autorNormalized = book.autor.RemoveDiacritics().ToUpper();
+                        book.search = $"{book.nomeNormalized} {book.autorNormalized}";
+
+                        books.Add(book);
+                    }
+                }
+            }
+            return books;
         }
     }
 
