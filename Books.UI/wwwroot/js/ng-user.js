@@ -1,6 +1,6 @@
 (function () {
 
-    var app = angular.module("app", ["ngMaterial", "ngTouch","ngMdIcons"]);
+    var app = angular.module("app", ["ngMaterial", "ngAnimate", "ngTouch", "ngMdIcons"]);
     app.config(["$mdThemingProvider", function ($mdThemingProvider) {
         $mdThemingProvider.theme("dark-grey").backgroundPalette("grey").dark();
         $mdThemingProvider.theme("dark-orange").backgroundPalette("orange").dark();
@@ -43,7 +43,7 @@
 
     var app = angular.module("app");
 
-    var mainController = ["$scope", "$timeout", "$q", "$log", "bookService", "$http", function ($scope, $timeout, $q, $log, bookService, $http) {
+    var mainController = ["$scope", "$timeout", "$q", "$log", "bookService", "$http", "$window", function ($scope, $timeout, $q, $log, bookService, $http, $window) {
 
         var self = this;
         $scope.books = [];
@@ -52,10 +52,13 @@
             self.searchText = '';
         }
 
-        $scope.apagar = function (id) {
-            $scope.books = $scope.books.filter(function (obj) {
-                return obj.id !== id;
-            });
+        $scope.apagar = function (book) {
+            $scope.books.splice($scope.books.indexOf(book), 1);
+        };
+
+        $scope.splice = function (item) {
+            var index = $scope.books.indexOf(item);
+            $scope.books.splice(index, 1);
         };
 
         self.simulateQuery = false;
@@ -76,18 +79,18 @@
         }
 
         self.selectedItemChange = function selectedItemChange(item) {
-            $log.debug(item);
-            $http.get("/books", { params: { nome: item.nome, autor: item.autor } }).then(function (response) {
-                    $log.info(response);
-                    self.clear();
-                    $scope.books.push(response.data);
-                },
-                function (msg, code) {
-                    $log.info(msg, code);
-                });
+            if (item != null) {
+                $log.info(item);
+                $http.get("/books", { params: { nome: item.nome, autor: item.autor } }).then(function(response) {
+                        $log.info(response);
+                        self.clear();
+                        $scope.books.push(response.data);
+                    },
+                    function(msg, code) {
+                        $log.info(msg, code);
+                    });
+            }
         }
-         
-
     }];
 
 

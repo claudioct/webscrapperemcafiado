@@ -114,12 +114,23 @@ AND UPPER(L.Nome) = UPPER(@nome)";
 
         public List<LivroEntity> GetAllBooks()
         {
+
+
+
             List<LivroEntity> books = new List<LivroEntity>();
             var query =
                 $@"
 SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 SELECT  L.IdLivro, E.Nome Genero, L.Nome, L.Autor, L.QtdVendida, L.DtUltimaVenda, L.ValorUltimaVenda, L.ValorMaxVenda, L.ValorMinVenda, L.ValorMedioVenda 
 FROM Livroes L INNER JOIN Estantes E ON E.IdEstante = L.IdEstante;";
+#if DEBUG
+            {
+                query += @"
+ORDER BY L.QtdVendida DESC
+LIMIT 5";
+            }
+#endif
+
 
             using (var connection = new MySqlConnection(_connString))
             {

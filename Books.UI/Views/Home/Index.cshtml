@@ -18,12 +18,13 @@
         </md-content>
         <md-content class="md-padding">
             <div flex-xs flex-gt-md="55" layout="column">
-                <md-item ng-repeat="item in books | orderBy:'-'" data-ng-swipe-left="apagar(item.id)">
-                    <md-card md-theme="dark-grey" md-theme-watch>
+                <md-item ng-repeat="item in books | orderBy:'-'"  class="animation">
+                    <md-card md-theme="dark-grey" md-theme-watch data-ng-swipe-left="apagar(item)">
                         <md-card-title style="background-color: #008080">
                             <md-card-title-text>
                                 <span class="md-headline">{{item.nome}}</span>
                                 <span class="md-subhead">{{item.autor}}<br/>{{item.genero}}</span>
+                                <!--<button ng-click="splice(item)">splice</button>-->
                             </md-card-title-text>
                         </md-card-title>
                         <md-card-content layout="column" layout-align="center">

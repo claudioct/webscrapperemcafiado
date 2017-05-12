@@ -1,6 +1,6 @@
 ﻿(function () {
 
-    var app = angular.module("app", ["ngMaterial", "ngTouch","ngMdIcons"]);
+    var app = angular.module("app", ["ngMaterial", "ngAnimate", "ngTouch", "ngMdIcons"]);
     app.config(["$mdThemingProvider", function ($mdThemingProvider) {
         $mdThemingProvider.theme("dark-grey").backgroundPalette("grey").dark();
         $mdThemingProvider.theme("dark-orange").backgroundPalette("orange").dark();
